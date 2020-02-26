@@ -1,0 +1,105 @@
+<!-- index.html
+     Made by Thomas Simon
+     Spring 2020
+-->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quick Pick</title>
+<style>
+  body {font-family: "Helvetica";}
+  h1 {background: #ff5454;
+      text-align:center;
+      padding:10px;
+      font-style:italic;}
+  .container {  border-style: solid;
+                border-width: 5px;
+                margin-left:10%;
+                margin-right:10%;
+                border-color:black;
+                padding:2%;
+                text-align:center;}
+</style>
+</head>
+
+<body>
+	<h1>Quick Pick</h1>
+  <div class="container">
+  <form name="ballform">
+    <p>Input five numbers seperated by spaces: </p><input type="text" id="user_seq" value="0 0 0 0 0">
+    <p>Input your numeric Lucky Ball guess: </p><input type="number" id="user_lucky" value="0">
+    <br><br><button onclick="quickPick()">Compare And Win!</button>
+  </form>
+  </div>
+  <br>
+	<script language="javascript">
+  //document.getElementById("result").innerHTML = calcNums();
+  function calcNums(){
+    var result = document.getElementById("result");
+    var seq = [];
+    var lucky = Math.floor((Math.random() * 18) + 1);
+    for (var i = 0; i < 5; i++){
+      seq[i] = Math.floor((Math.random() * 48) + 1); //CHANGE
+    }
+    unsorted = "";
+    for (i = 0; i < 5; i++){
+      unsorted += seq[i] + " ";
+    }
+    seq.sort(function(a, b){return a - b});
+    sorted = "";
+    for (i = 0; i < 5; i++){
+      sorted += seq[i] + " ";
+    }
+    document.write("<div class='container'> Unsorted Array:<br>" + unsorted + "<br> Sorted Array:<br>" + sorted + "<br>Lucky Number: <br>" + lucky + "</div>");
+    seq[5] = lucky;
+    return seq;
+  }
+  var the_seq = calcNums();
+  function quickPick(){
+    var similar_nums = 0;
+    var user_str = document.getElementById("user_seq").value;
+    var user_seq = user_str.split(" ");
+    for (var i = 0; i < 5; i++){
+      user_seq[i] = parseInt(user_seq[i]);
+    }
+    var count = 0;
+    for (var i = 0; i < 5; i++){
+      if (the_seq.includes(user_seq[i])){
+        count++;
+      }
+    }
+    var check_lucky = false;
+    if (parseInt(document.getElementById("user_lucky").value) == the_seq[5]){
+      check_lucky = true;
+    }
+
+    if (count == 5 && check_lucky){
+      document.write("You win $7,000 a WEEK for LIFE!");
+    } else if (count == 5 && !check_lucky){
+      document.write("You win $25,000 a YEAR for LIFE!");
+    } else if (count == 4 && check_lucky){
+      document.write("You win $5,000");
+    } else if (count == 4 && !check_lucky){
+      document.write("You win $200");
+    } else if (count == 3 && check_lucky){
+      document.write("You win $150");
+    } else if (count == 3 && !check_lucky){
+      document.write("You win $20");
+    } else if (count == 2 && check_lucky){
+      document.write("You win $25");
+    } else if (count == 2 && !check_lucky){
+      document.write("You win $3");
+    } else if (count == 1 && check_lucky){
+      document.write("You win $6");
+    } else if (count == 0 && check_lucky){
+      document.write("You win $4");
+    } else {
+      document.write("You LOSE");
+    }
+  }
+	</script>
+  <br>
+  <br>
+</body>
+</html>
